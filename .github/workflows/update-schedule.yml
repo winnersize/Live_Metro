@@ -30,13 +30,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run scraper
+      - name: Run scraper (Лісова -> Академмістечко)
         run: python scrape_inmetro_schedule.py
+
+      - name: Run scraper (Академмістечко -> Лісова)
+        run: python scrape_inmetro_reverse.py
 
       - name: Commit and push if changed
         run: |
           git config user.name "schedule-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add schedule_lisova_to_akademmistechko.json
+          git add schedule_lisova_to_akademmistechko.json schedule_akademmistechko_to_lisova.json
           git diff --staged --quiet || git commit -m "Автообновление расписания"
           git push
